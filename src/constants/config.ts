@@ -1,7 +1,6 @@
 export const SITE = {
   name: "Fig & Peach",
   formTitle: "Your order",
-  orderEmail: "hellofigandpeach@gmail.com",
   instagramHandle: "@fig.n.peach",
   instagramUrl: "https://www.instagram.com/fig.n.peach/",
   paymentNote: "Payment via Zelle or Venmo. I'll confirm once received",

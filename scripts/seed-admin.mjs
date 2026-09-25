@@ -5,11 +5,16 @@ import { loadEnvFromProjectRoot, postgresOptions } from "./load-env.mjs";
 loadEnvFromProjectRoot(import.meta.url);
 
 const databaseUrl = process.env.DATABASE_URL;
-const email = process.env.ADMIN_EMAIL ?? "hellofigandpeach@gmail.com";
+const email = process.env.ADMIN_EMAIL;
 const password = process.env.ADMIN_PASSWORD;
 
 if (!databaseUrl) {
   console.error("Missing DATABASE_URL in .env");
+  process.exit(1);
+}
+
+if (!email) {
+  console.error("Missing ADMIN_EMAIL in .env");
   process.exit(1);
 }
 

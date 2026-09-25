@@ -52,7 +52,7 @@ Copy [`.env.example`](.env.example) to `.env` locally. Use the **same keys** in 
 | `CLOUDINARY_URL` | `cloudinary://API_KEY:API_SECRET@CLOUD_NAME` (no duplicate prefix) |
 | `RESEND_API_KEY` | Resend API key |
 | `ORDER_NOTIFICATION_EMAIL` | Inbox that receives new orders |
-| `ORDER_FROM_EMAIL` | Resend sender (verified domain or `onboarding@resend.dev` for testing) |
+| `ORDER_FROM_EMAIL` | Resend sender (use a verified address in your Resend account) |
 | `VITE_SKIP_ORDER_EMAIL` | Optional, **local only**: `true` with `npm run dev` to skip email on checkout |
 
 Never commit `.env`.

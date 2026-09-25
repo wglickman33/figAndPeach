@@ -1,8 +1,6 @@
 import type { Handler } from "@netlify/functions";
 import { Resend } from "resend";
-
-const ORDER_EMAIL = process.env.ORDER_NOTIFICATION_EMAIL ?? "hellofigandpeach@gmail.com";
-const FROM_EMAIL = process.env.ORDER_FROM_EMAIL ?? "onboarding@resend.dev";
+import { requireEnv } from "./lib/env";
 
 type CartItem = {
   categoryName: string;
@@ -155,13 +153,22 @@ export const handler: Handler = async (event) => {
     return json(400, { error: "Missing required order fields." });
   }
 
+  let orderNotificationEmail: string;
+  let orderFromEmail: string;
+  try {
+    orderNotificationEmail = requireEnv("ORDER_NOTIFICATION_EMAIL");
+    orderFromEmail = requireEnv("ORDER_FROM_EMAIL");
+  } catch {
+    return json(503, { error: "Email service is not configured yet." });
+  }
+
   const resend = new Resend(apiKey);
   const itemLabel = order.items.length === 1 ? "1 item" : `${order.items.length} items`;
 
   try {
     const { error } = await resend.emails.send({
-      from: `Fig & Peach Orders <${FROM_EMAIL}>`,
-      to: [ORDER_EMAIL],
+      from: `Fig & Peach Orders <${orderFromEmail}>`,
+      to: [orderNotificationEmail],
       subject: `New order: ${order.firstName} ${order.lastName} · ${itemLabel}`,
       html: buildEmailHtml(order),
       text: buildEmailText(order),

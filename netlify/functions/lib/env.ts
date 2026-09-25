@@ -16,5 +16,5 @@ export function getSessionSecret(): string {
 }
 
 export function getAdminEmail(): string {
-  return (process.env.ADMIN_EMAIL ?? "hellofigandpeach@gmail.com").toLowerCase();
+  return requireEnv("ADMIN_EMAIL").toLowerCase();
 }
