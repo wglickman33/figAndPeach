@@ -1,0 +1,92 @@
+.mobile-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem clamp(0.85rem, 3vw, 1.25rem);
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+  border-bottom: 2px solid var(--color-pink-light);
+  background: rgba(255, 251, 247, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.mobile-header__menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-plum);
+  cursor: pointer;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease;
+}
+
+.mobile-header__menu:hover {
+  background: var(--color-cream-dark);
+  color: var(--color-plum);
+}
+
+.mobile-header__menu:focus {
+  outline: none;
+}
+
+.mobile-header__menu:focus-visible {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 2px;
+}
+
+.mobile-header__center {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  pointer-events: none;
+}
+
+.mobile-header__title {
+  pointer-events: auto;
+  width: fit-content;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 5vw, 1.75rem);
+  font-weight: 600;
+  color: var(--color-plum);
+  text-decoration: none;
+  text-align: center;
+  line-height: 1.15;
+  transition: color 0.4s ease;
+}
+
+.mobile-header__title:hover {
+  color: var(--color-coral);
+}
+
+.mobile-header__order {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 2px solid var(--color-coral);
+  background: var(--color-cream);
+  color: var(--color-plum);
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.mobile-header__order:hover {
+  background: var(--color-white);
+  color: var(--color-coral);
+}

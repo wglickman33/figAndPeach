@@ -1,0 +1,136 @@
+.confirmation {
+  text-align: center;
+}
+
+.confirmation__icon {
+  font-size: 2.5rem;
+  color: var(--color-pink);
+  margin-bottom: 0.5rem;
+}
+
+.confirmation__title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: var(--color-plum);
+}
+
+.confirmation__message {
+  margin: 0 0 1.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.confirmation__card {
+  text-align: left;
+  background: var(--color-white);
+  border: 2px solid var(--color-pink-light);
+  border-radius: var(--radius-lg);
+  padding: clamp(1rem, 3vw, 1.25rem) clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 599px) {
+  .confirmation__card {
+    padding-inline: 1rem;
+  }
+}
+
+.confirmation__card-title {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--color-plum);
+}
+
+.confirmation__details {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.confirmation__details dt {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-plum-muted);
+  margin-bottom: 0.15rem;
+}
+
+.confirmation__details dd {
+  margin: 0;
+  color: var(--color-text);
+  line-height: 1.45;
+}
+
+.confirmation__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.confirmation__items li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--color-cream-dark);
+}
+
+.confirmation__items li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.confirmation__item-price {
+  font-weight: 600;
+  color: var(--color-plum);
+}
+
+.confirmation__total {
+  margin-top: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 2px solid var(--color-pink-light);
+}
+
+.confirmation__total dt,
+.confirmation__total dd {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-coral);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.confirmation__total dd {
+  margin-top: 0.15rem;
+}
+
+.confirmation__payment {
+  margin: 0 0 1.5rem;
+  padding: 0.85rem 1rem;
+  background: var(--color-cream);
+  border-radius: var(--radius-md);
+  font-size: 0.925rem;
+  color: var(--color-plum);
+}
+
+.confirmation__link {
+  display: inline-block;
+  color: var(--color-coral);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--transition-hover);
+}
+
+.confirmation__link:hover {
+  border-bottom-color: var(--color-coral);
+}

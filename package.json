@@ -5,16 +5,28 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:netlify": "netlify dev",
+    "db:seed": "node scripts/db-seed.mjs",
+    "seed:admin": "node scripts/seed-admin.mjs",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
   "dependencies": {
+    "postgres": "^3.4.7",
+    "@netlify/functions": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
+    "jose": "^6.2.12",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.2"
+    "react-router-dom": "^7.18.2",
+    "resend": "^6.22.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
+    "netlify-cli": "^27.9.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
@@ -22,5 +34,8 @@
     "oxlint": "^1.75.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.0"
+  },
+  "overrides": {
+    "sharp": "0.35.4"
   }
 }

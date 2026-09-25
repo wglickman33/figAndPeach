@@ -2,7 +2,15 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA routing — send all paths to index.html (form + admin routes)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

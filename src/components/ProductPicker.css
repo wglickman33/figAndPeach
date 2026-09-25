@@ -1,0 +1,112 @@
+.product-picker__empty {
+  margin: 0.75rem 0 0;
+  font-size: clamp(1.05rem, 2.6vw, 1.15rem);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.product-picker {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.product-picker__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(0.85rem, 2.5vw, 1rem);
+  margin-top: clamp(0.85rem, 2vw, 1.1rem);
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 2px solid var(--color-pink-light);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  overflow: hidden;
+  transition:
+    border-color var(--transition-hover),
+    box-shadow var(--transition-hover);
+}
+
+.product-card:hover {
+  border-color: var(--color-pink);
+  box-shadow: 0 4px 12px rgba(92, 61, 82, 0.08);
+}
+
+.product-card--selected {
+  border-color: var(--color-coral);
+  box-shadow: var(--shadow-selected);
+}
+
+.product-card--selected:hover {
+  border-color: var(--color-coral);
+}
+
+.product-card__select {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.product-card__image-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--color-cream);
+}
+
+.product-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem;
+}
+
+.product-card__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.5vw, 1.15rem);
+  color: var(--color-plum);
+}
+
+.product-card__description {
+  margin: 0;
+  font-size: clamp(0.8125rem, 2vw, 0.875rem);
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.product-card__badge {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent, #8b5a4a);
+}
+
+.product-card__price {
+  margin: 0.25rem 0 0;
+  font-weight: 700;
+  color: var(--color-coral);
+  font-size: 1.05rem;
+}
+
+@media (min-width: 520px) {
+  .product-picker__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

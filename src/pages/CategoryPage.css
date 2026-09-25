@@ -1,0 +1,28 @@
+.category-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.category-page__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.category-page__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 4.5vw, 2.35rem);
+  font-weight: 600;
+  color: var(--color-plum);
+  line-height: 1.15;
+}
+
+.category-page__intro {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.6vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  max-width: 42rem;
+}

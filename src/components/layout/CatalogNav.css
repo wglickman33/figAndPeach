@@ -1,0 +1,207 @@
+.catalog-nav {
+  --catalog-nav-width: min(280px, 86vw);
+  z-index: 40;
+}
+
+.catalog-nav--desktop {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  border-right: 2px solid var(--color-pink-light);
+  background: var(--color-white);
+  box-shadow: 4px 0 24px rgba(92, 61, 82, 0.06);
+}
+
+.catalog-nav--drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--catalog-nav-width);
+  border-right: 2px solid var(--color-pink-light);
+  background: var(--color-white);
+  box-shadow: 8px 0 32px rgba(92, 61, 82, 0.12);
+  transform: translateX(-105%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
+}
+
+.catalog-nav--drawer.catalog-nav--open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.catalog-nav__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(1rem, 3vw, 1.35rem);
+  padding-top: max(1rem, env(safe-area-inset-top));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  overflow-y: auto;
+}
+
+.catalog-nav__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-pink-light);
+}
+
+.catalog-nav__brand--drawer {
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+}
+
+.catalog-nav__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 2px solid #b8b0b4;
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  color: var(--color-plum);
+  cursor: pointer;
+  transition:
+    border-color 0.4s ease,
+    background 0.4s ease,
+    color 0.4s ease;
+}
+
+.catalog-nav__close:hover {
+  border-color: var(--color-pink-light);
+  background: var(--color-cream);
+  color: var(--color-plum);
+}
+
+.catalog-nav__close:focus {
+  outline: none;
+}
+
+.catalog-nav__close:focus-visible {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 2px;
+}
+
+.catalog-nav__logo-link {
+  display: block;
+  line-height: 0;
+}
+
+.catalog-nav__logo {
+  width: min(160px, 70vw);
+  height: auto;
+}
+
+.catalog-nav__toc-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+  font-weight: 600;
+  color: var(--color-plum);
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.catalog-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.catalog-nav__link {
+  display: block;
+  margin: 0 0.5rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-md);
+  border-inline-start: 3px solid transparent;
+  color: var(--color-plum-muted);
+  font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1.35;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.catalog-nav__link:hover {
+  background: #ebe8ea;
+  color: var(--color-plum);
+}
+
+.catalog-nav__link--active {
+  background: var(--color-pink-light);
+  color: var(--color-pink-dark);
+  border-inline-start-color: var(--color-pink-dark);
+}
+
+.catalog-nav__link--active:hover {
+  background: var(--color-pink-light);
+  color: var(--color-pink-dark);
+}
+
+.catalog-nav__footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--color-pink-light);
+}
+
+.catalog-nav__order {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-lg);
+  border: none;
+  background: var(--color-plum);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease;
+}
+
+.catalog-nav__order:hover {
+  background: var(--color-pink-dark);
+  color: var(--color-white);
+}
+
+.catalog-nav__order--active {
+  background: var(--color-pink-light);
+  color: var(--color-plum);
+}
+
+.catalog-nav__order--active:hover {
+  background: var(--color-pink);
+  color: var(--color-white);
+}
+
+.catalog-nav__order--active .order-cart-contents__count {
+  background: var(--color-plum);
+  color: var(--color-white);
+}

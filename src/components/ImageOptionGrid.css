@@ -1,0 +1,97 @@
+.image-option-grid {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.image-option-grid__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1rem);
+  margin-top: clamp(0.85rem, 2vw, 1.1rem);
+}
+
+.image-option-grid--disabled {
+  opacity: 0.55;
+}
+
+.image-option-grid--disabled .image-option-card {
+  cursor: not-allowed;
+}
+
+.image-option-grid__empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  color: var(--color-text-muted);
+}
+
+.image-option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 2px solid var(--color-pink-light);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color 0.4s ease,
+    background 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.image-option-card:hover {
+  border-color: var(--color-pink);
+  background: var(--color-cream-dark);
+}
+
+.image-option-card--selected {
+  border-color: var(--color-coral);
+  background: var(--color-cream);
+  box-shadow: var(--shadow-selected);
+}
+
+.image-option-card--selected:hover {
+  border-color: var(--color-coral);
+}
+
+.image-option-card__image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--color-cream);
+}
+
+.image-option-card__name {
+  font-size: clamp(0.9375rem, 2.2vw, 1.05rem);
+  font-weight: 600;
+  color: var(--color-plum);
+}
+
+@media (min-width: 520px) {
+  .image-option-grid__options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .image-option-grid__options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+.image-option-grid--compact .image-option-grid__options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 480px) {
+  .image-option-grid--compact .image-option-grid__options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
