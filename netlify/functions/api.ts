@@ -218,8 +218,8 @@ export const handler: Handler = async (event) => {
 
     if (method === "GET" && path === "/auth/me") {
       const session = await requireAdmin(event);
-      if (!session) return json(401, { error: "Unauthorized." });
-      return json(200, session);
+      if (!session) return json(200, { authenticated: false });
+      return json(200, { authenticated: true, email: session.email, role: session.role });
     }
 
     const admin = await requireAdmin(event);

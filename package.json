@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:netlify": "netlify dev",
+    "dev:vite": "vite",
+    "dev:netlify": "node scripts/dev-netlify.mjs",
     "db:seed": "node scripts/db-seed.mjs",
     "seed:admin": "node scripts/seed-admin.mjs",
     "build": "tsc -b && vite build",

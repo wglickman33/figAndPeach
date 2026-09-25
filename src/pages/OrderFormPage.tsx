@@ -107,6 +107,8 @@ export function OrderFormPage() {
             <label className="field">
               <span className="field__label">First name</span>
               <input
+                id="order-first-name"
+                name="firstName"
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -117,6 +119,8 @@ export function OrderFormPage() {
             <label className="field">
               <span className="field__label">Last name</span>
               <input
+                id="order-last-name"
+                name="lastName"
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -132,6 +136,7 @@ export function OrderFormPage() {
           <div className="fulfillment-toggle" role="radiogroup" aria-label="Fulfillment method">
             <label className={`fulfillment-option${fulfillment === "pickup" ? " fulfillment-option--active" : ""}`}>
               <input
+                id="fulfillment-pickup"
                 type="radio"
                 name="fulfillment"
                 value="pickup"
@@ -142,6 +147,7 @@ export function OrderFormPage() {
             </label>
             <label className={`fulfillment-option${fulfillment === "shipped" ? " fulfillment-option--active" : ""}`}>
               <input
+                id="fulfillment-shipped"
                 type="radio"
                 name="fulfillment"
                 value="shipped"
@@ -161,6 +167,8 @@ export function OrderFormPage() {
               <label className="field">
                 <span className="field__label">Street address</span>
                 <input
+                  id="order-street"
+                  name="street"
                   type="text"
                   value={address.street}
                   onChange={(e) => updateAddress("street", e.target.value)}
@@ -171,6 +179,8 @@ export function OrderFormPage() {
               <label className="field">
                 <span className="field__label">Apt, suite, etc. (optional)</span>
                 <input
+                  id="order-street2"
+                  name="street2"
                   type="text"
                   value={address.street2}
                   onChange={(e) => updateAddress("street2", e.target.value)}
@@ -181,6 +191,8 @@ export function OrderFormPage() {
                 <label className="field">
                   <span className="field__label">City</span>
                   <input
+                    id="order-city"
+                    name="city"
                     type="text"
                     value={address.city}
                     onChange={(e) => updateAddress("city", e.target.value)}
@@ -191,6 +203,8 @@ export function OrderFormPage() {
                 <label className="field">
                   <span className="field__label">State</span>
                   <input
+                    id="order-state"
+                    name="state"
                     type="text"
                     value={address.state}
                     onChange={(e) => updateAddress("state", e.target.value)}
@@ -201,6 +215,8 @@ export function OrderFormPage() {
                 <label className="field">
                   <span className="field__label">ZIP</span>
                   <input
+                    id="order-zip"
+                    name="zip"
                     type="text"
                     value={address.zip}
                     onChange={(e) => updateAddress("zip", e.target.value)}
@@ -227,6 +243,8 @@ export function OrderFormPage() {
           <label className="field">
             <span className="section-label">Special requests</span>
             <textarea
+              id="order-special-requests"
+              name="specialRequests"
               value={specialRequests}
               onChange={(e) => setSpecialRequests(e.target.value)}
               rows={4}

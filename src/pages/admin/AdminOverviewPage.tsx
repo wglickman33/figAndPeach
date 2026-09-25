@@ -1,58 +1,74 @@
-import { Link } from "react-router-dom";
 import { useCatalog } from "../../context/useCatalog";
+import { AdminPageIntro } from "../../components/admin/AdminPageIntro";
 import "./AdminPages.css";
 
 export function AdminOverviewPage() {
   const { online, error, categories, products, customization } = useCatalog();
 
-  return (
-    <section className="admin-panel">
-      <h2 className="admin-heading">Overview</h2>
-      <p className="admin-muted">
-        Manage shop products and bead/clasp inventory used on the customize pages.
-      </p>
+  const activeProducts = products.length;
+  const optionCount = customization.options.length;
 
-      <dl className="admin-stats">
-        <div>
-          <dt>API</dt>
-          <dd>{online ? "Connected" : "Offline"}</dd>
+  return (
+    <section className="admin-panel admin-panel--overview">
+      <AdminPageIntro
+        title="Overview"
+        lede="This is your control panel for the Fig & Peach shop. Use the menu above to add jewelry for sale, photos for customization, and the steps customers see when they personalize an item."
+      />
+
+      <div className="admin-stats admin-stats--cards">
+        <div className="admin-stat-card">
+          <p className="admin-stat-card__label">Shop status</p>
+          <p className={`admin-stat-card__value ${online ? "admin-stat-card__ok" : "admin-stat-card__warn"}`}>
+            {online ? "Connected" : "Offline"}
+          </p>
         </div>
-        <div>
-          <dt>Shop categories</dt>
-          <dd>{categories.length}</dd>
+        <div className="admin-stat-card">
+          <p className="admin-stat-card__label">Categories</p>
+          <p className="admin-stat-card__value">{categories.length}</p>
+          <p className="admin-stat-card__hint">Sections in the shop menu</p>
         </div>
-        <div>
-          <dt>Products</dt>
-          <dd>{products.length}</dd>
+        <div className="admin-stat-card">
+          <p className="admin-stat-card__label">Products</p>
+          <p className="admin-stat-card__value">{activeProducts}</p>
+          <p className="admin-stat-card__hint">Items customers can buy</p>
         </div>
-        <div>
-          <dt>Customization groups</dt>
-          <dd>{customization.groups.length}</dd>
+        <div className="admin-stat-card">
+          <p className="admin-stat-card__label">Bead types</p>
+          <p className="admin-stat-card__value">{customization.groups.length}</p>
+          <p className="admin-stat-card__hint">Groups like bead sizes or clasps</p>
         </div>
-        <div>
-          <dt>Customization options</dt>
-          <dd>{customization.options.length}</dd>
+        <div className="admin-stat-card">
+          <p className="admin-stat-card__label">Bead options</p>
+          <p className="admin-stat-card__value">{optionCount}</p>
+          <p className="admin-stat-card__hint">Photos inside each group</p>
         </div>
-      </dl>
+      </div>
 
       {!online && error && <p className="admin-error">{error}</p>}
 
-      <div className="admin-actions">
-        <Link to="/admin/categories" className="admin-button">
-          Table of Contents
-        </Link>
-        <Link to="/admin/products" className="admin-button admin-button--ghost">
-          Products
-        </Link>
-        <Link to="/admin/groups" className="admin-button admin-button--ghost">
-          Bead types
-        </Link>
-        <Link to="/admin/options" className="admin-button admin-button--ghost">
-          Bead options
-        </Link>
-        <Link to="/admin/customization-fields" className="admin-button admin-button--ghost">
-          Customize fields
-        </Link>
+      <div className="admin-callout admin-callout--guide">
+        <h3 className="admin-subheading">Suggested order when setting up the shop</h3>
+        <ol className="admin-steps">
+          <li>
+            <strong>Categories</strong>: Add or reorder sections (Necklaces, Scrunchies, etc.) in the
+            shop sidebar.
+          </li>
+          <li>
+            <strong>Bead Types</strong>: Create folders for customization (bead sizes, clasps, colors).
+          </li>
+          <li>
+            <strong>Bead Options</strong>: Upload each photo into the right group (download from Google
+            Drive to your computer first, then upload here).
+          </li>
+          <li>
+            <strong>Customize Fields</strong>: Choose what customers pick for each category (length,
+            clasp, colors, and so on). Usually set once per category.
+          </li>
+          <li>
+            <strong>Products</strong>: Add each piece for sale with photo, price, and whether it is
+            ready-made or customizable.
+          </li>
+        </ol>
       </div>
     </section>
   );

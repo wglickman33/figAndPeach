@@ -174,8 +174,14 @@ export async function logoutAdmin() {
   return request<void>("/auth/logout", { method: "POST" });
 }
 
-export async function fetchAdminSession() {
-  return request<AdminSession>("/auth/me");
+type AuthMeResponse =
+  | { authenticated: false }
+  | { authenticated: true; email: string; role: "admin" };
+
+export async function fetchAdminSession(): Promise<AdminSession | null> {
+  const data = await request<AuthMeResponse>("/auth/me");
+  if (!data.authenticated) return null;
+  return { email: data.email, role: data.role };
 }
 
 export type CloudinarySignResponse = {

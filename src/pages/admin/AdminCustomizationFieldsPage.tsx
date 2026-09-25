@@ -14,6 +14,7 @@ import {
   updateProductCustomizationField,
 } from "../../lib/api";
 import type { CatalogProduct } from "../../types/catalog";
+import { AdminPageIntro } from "../../components/admin/AdminPageIntro";
 import type { CustomizationFieldDefinition, CustomizationFieldType } from "../../types/customizationFields";
 import "./AdminPages.css";
 
@@ -134,16 +135,27 @@ export function AdminCustomizationFieldsPage() {
   }
 
   return (
-    <div className="admin-split">
+    <div className="admin-stack">
+      <AdminPageIntro
+        title="Customize Fields"
+        lede="Control what customers choose when they personalize an item: length, clasp, bead colors, and so on. Set defaults for each category here. Only use product overrides if one item needs different steps than the rest of its category."
+      />
+
+      <div className="admin-split">
       <section className="admin-panel">
-        <h2 className="admin-heading">Category fields</h2>
+        <h3 className="admin-subheading">Category Fields</h3>
         <p className="admin-muted">
-          Default customize steps for every customizable product in this category.
+          Default steps for every customizable product in the selected category.
         </p>
 
         <label className="admin-field">
           <span>Category</span>
-          <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+          <select
+            id="customize-fields-category"
+            name="customizeFieldsCategory"
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+          >
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -177,7 +189,7 @@ export function AdminCustomizationFieldsPage() {
 
         <form className="admin-form admin-form--compact" onSubmit={handleAddCategoryField}>
           <h3 className="admin-subheading">Add field</h3>
-          <FieldFormFields groups={customization.groups} />
+          <FieldFormFields groups={customization.groups} idPrefix="category-field-create" />
           <button type="submit" className="admin-button" disabled={busy}>
             Add to category
           </button>
@@ -185,14 +197,16 @@ export function AdminCustomizationFieldsPage() {
       </section>
 
       <section className="admin-panel">
-        <h2 className="admin-heading">Product overrides</h2>
+        <h3 className="admin-subheading">Product Overrides</h3>
         <p className="admin-muted">
-          Optional: replace category fields for one product (same category list above).
+          Optional: different steps for a single product (advanced: most items use category fields only).
         </p>
 
         <label className="admin-field">
           <span>Product</span>
           <select
+            id="customize-fields-product"
+            name="customizeFieldsProduct"
             value={productId}
             onChange={(e) => setProductId(e.target.value)}
           >
@@ -208,6 +222,8 @@ export function AdminCustomizationFieldsPage() {
         {productId && (
           <label className="admin-field admin-field--checkbox">
             <input
+              id="customize-fields-use-category-defaults"
+              name="customizeFieldsUseCategoryDefaults"
               type="checkbox"
               checked={useCategoryDefaults}
               onChange={(e) => void toggleProductDefaults(e.target.checked)}
@@ -244,7 +260,7 @@ export function AdminCustomizationFieldsPage() {
 
             <form className="admin-form admin-form--compact" onSubmit={handleAddProductField}>
               <h3 className="admin-subheading">Add override field</h3>
-              <FieldFormFields groups={customization.groups} />
+              <FieldFormFields groups={customization.groups} idPrefix="product-field-create" />
               <button type="submit" className="admin-button" disabled={busy}>
                 Add to product
               </button>
@@ -255,6 +271,7 @@ export function AdminCustomizationFieldsPage() {
         {error && <p className="admin-error">{error}</p>}
         {message && <p className="admin-success">{message}</p>}
       </section>
+      </div>
     </div>
   );
 }
@@ -270,20 +287,36 @@ function parseConfig(groupId: string, lengthsRaw: string) {
   return config;
 }
 
-function FieldFormFields({ groups }: { groups: { id: string; name: string }[] }) {
+function FieldFormFields({
+  groups,
+  idPrefix,
+}: {
+  groups: { id: string; name: string }[];
+  idPrefix: string;
+}) {
   return (
     <>
       <label className="admin-field">
         <span>Field key (unique id)</span>
-        <input name="fieldKey" required placeholder="e.g. colors" />
+        <input
+          id={`${idPrefix}-fieldKey`}
+          name="fieldKey"
+          required
+          placeholder="e.g. colors"
+        />
       </label>
       <label className="admin-field">
         <span>Label</span>
-        <input name="label" required placeholder="Customer-facing title" />
+        <input
+          id={`${idPrefix}-label`}
+          name="label"
+          required
+          placeholder="Customer-facing title"
+        />
       </label>
       <label className="admin-field">
         <span>Field type</span>
-        <select name="fieldType" required defaultValue="group_multi">
+        <select id={`${idPrefix}-fieldType`} name="fieldType" required defaultValue="group_multi">
           {CUSTOMIZATION_FIELD_TYPES.map((type) => (
             <option key={type.value} value={type.value}>
               {type.label}
@@ -293,8 +326,8 @@ function FieldFormFields({ groups }: { groups: { id: string; name: string }[] })
       </label>
       <label className="admin-field">
         <span>Option group (for group_* types)</span>
-        <select name="groupId" defaultValue="">
-          <option value="">—</option>
+        <select id={`${idPrefix}-groupId`} name="groupId" defaultValue="">
+          <option value="">(none)</option>
           {groups.map((group) => (
             <option key={group.id} value={group.id}>
               {group.name}
@@ -304,11 +337,11 @@ function FieldFormFields({ groups }: { groups: { id: string; name: string }[] })
       </label>
       <label className="admin-field">
         <span>Lengths (comma-separated, for length_pills)</span>
-        <input name="lengths" placeholder="14, 16, 18, 20" />
+        <input id={`${idPrefix}-lengths`} name="lengths" placeholder="14, 16, 18, 20" />
       </label>
       <label className="admin-field">
         <span>Sort order</span>
-        <input name="sortOrder" type="number" defaultValue={1} />
+        <input id={`${idPrefix}-sortOrder`} name="sortOrder" type="number" defaultValue={1} />
       </label>
     </>
   );

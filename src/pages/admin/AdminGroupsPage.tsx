@@ -7,6 +7,7 @@ import {
   updateCustomizationGroup,
 } from "../../lib/api";
 import { slugify } from "../../lib/slugify";
+import { AdminPageIntro } from "../../components/admin/AdminPageIntro";
 import type { CustomizationGroup, CustomizationGroupKind } from "../../types/catalog";
 import "./AdminPages.css";
 
@@ -77,25 +78,43 @@ export function AdminGroupsPage() {
 
   return (
     <div className="admin-stack">
-      <section className="admin-panel">
-        <h2 className="admin-heading">Customization groups</h2>
-        <p className="admin-muted">
-          Bead sizes/types (8mm x 5mm rondelle beads), clasps, pony beads, socks, etc. Customers pick a
-          group on detailed products, then choose options inside that group on the next step.
-        </p>
+      <AdminPageIntro
+        title="Bead Types"
+        lede="Think of these as folders: “8mm round beads,” “Clasps,” “Pony beads,” and so on. You do not upload photos here: only create the folder. Add the actual pictures under Bead Options."
+      />
 
-        <form className="admin-form" onSubmit={handleCreate}>
+      <section className="admin-panel">
+        <h3 className="admin-subheading">Add Bead Type</h3>
+
+        <form className="admin-form admin-form--constrained" onSubmit={handleCreate}>
           <label className="admin-field">
             <span>Display name</span>
-            <input value={name} onChange={(e) => syncIdFromName(e.target.value)} required />
+            <input
+              id="group-create-name"
+              name="groupCreateName"
+              value={name}
+              onChange={(e) => syncIdFromName(e.target.value)}
+              required
+            />
           </label>
           <label className="admin-field">
             <span>Group id (slug)</span>
-            <input value={id} onChange={(e) => setId(slugify(e.target.value))} required />
+            <input
+              id="group-create-id"
+              name="groupCreateId"
+              value={id}
+              onChange={(e) => setId(slugify(e.target.value))}
+              required
+            />
           </label>
           <label className="admin-field">
             <span>Kind</span>
-            <select value={kind} onChange={(e) => setKind(e.target.value as CustomizationGroupKind)}>
+            <select
+              id="group-create-kind"
+              name="groupCreateKind"
+              value={kind}
+              onChange={(e) => setKind(e.target.value as CustomizationGroupKind)}
+            >
               {CUSTOMIZATION_GROUP_KINDS.map((entry) => (
                 <option key={entry.value} value={entry.value}>
                   {entry.label}
@@ -106,20 +125,22 @@ export function AdminGroupsPage() {
           <label className="admin-field">
             <span>Sort order</span>
             <input
+              id="group-create-sort"
+              name="groupCreateSort"
               type="number"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
               required
             />
           </label>
-          <button type="submit" className="admin-button" disabled={busy}>
-            Add group
+          <button type="submit" className="admin-button admin-form__submit" disabled={busy}>
+            Add Bead Type
           </button>
         </form>
       </section>
 
       <section className="admin-panel">
-        <h2 className="admin-heading">Current groups</h2>
+        <h3 className="admin-subheading">Current Bead Types</h3>
         {error && <p className="admin-error">{error}</p>}
 
         <ul className="admin-list admin-list--stacked">
@@ -156,11 +177,21 @@ function GroupRow({ group, disabled, onSave, onDelete }: GroupRowProps) {
       <code className="admin-code">{group.id}</code>
       <label className="admin-field">
         <span>Name</span>
-        <input value={name} onChange={(e) => setName(e.target.value)} />
+        <input
+          id={`group-${group.id}-name`}
+          name={`group-${group.id}-name`}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
       </label>
       <label className="admin-field">
         <span>Kind</span>
-        <select value={kind} onChange={(e) => setKind(e.target.value as CustomizationGroupKind)}>
+        <select
+          id={`group-${group.id}-kind`}
+          name={`group-${group.id}-kind`}
+          value={kind}
+          onChange={(e) => setKind(e.target.value as CustomizationGroupKind)}
+        >
           {CUSTOMIZATION_GROUP_KINDS.map((entry) => (
             <option key={entry.value} value={entry.value}>
               {entry.label}
@@ -170,7 +201,13 @@ function GroupRow({ group, disabled, onSave, onDelete }: GroupRowProps) {
       </label>
       <label className="admin-field">
         <span>Sort</span>
-        <input type="number" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} />
+        <input
+          id={`group-${group.id}-sort`}
+          name={`group-${group.id}-sort`}
+          type="number"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+        />
       </label>
       <div className="admin-row-form__actions">
         <button

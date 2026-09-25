@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import logo from "../../assets/figAndPeach.png";
 import { useAdminAuth } from "../../context/useAdminAuth";
 import "./AdminPages.css";
 
@@ -32,12 +33,14 @@ export function AdminLoginPage() {
   return (
     <div className="admin-page admin-page--centered">
       <form className="admin-card admin-login" onSubmit={handleSubmit} autoComplete="off">
-        <h1 className="admin-title">Fig &amp; Peach Admin</h1>
-        <p className="admin-muted">Sign in to manage products and customization inventory.</p>
+        <img src={logo} alt="Fig and Peach" className="admin-login__logo" />
+        <h1 className="admin-title">Admin</h1>
+        <p className="admin-muted">Sign in to manage the shop, products, and customization photos.</p>
 
         <label className="admin-field">
           <span>Email</span>
           <input
+            id="admin-email"
             type="email"
             name="admin-email"
             autoComplete="off"
@@ -50,6 +53,7 @@ export function AdminLoginPage() {
         <label className="admin-field">
           <span>Password</span>
           <input
+            id="admin-password"
             type="password"
             name="admin-password"
             autoComplete="new-password"

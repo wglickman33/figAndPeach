@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { AdminPageIntro } from "../../components/admin/AdminPageIntro";
 import { useCatalog } from "../../context/useCatalog";
 import { createCategory, deleteCategory, updateCategory } from "../../lib/api";
 import { slugify } from "../../lib/slugify";
@@ -36,7 +37,7 @@ export function AdminCategoriesPage() {
       });
       setName("");
       setId("");
-      setMessage("Category added. It will appear in the Table of Contents.");
+      setMessage("Category added. It will appear in the shop menu.");
       await refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not create category.");
@@ -78,25 +79,54 @@ export function AdminCategoriesPage() {
 
   return (
     <div className="admin-stack">
-      <section className="admin-panel">
-        <h2 className="admin-heading">Table of Contents categories</h2>
-        <p className="admin-muted">
-          These are the shop sections in the sidebar (Necklaces, Bracelets, etc.). Sort order controls
-          nav order.
-        </p>
+      <AdminPageIntro
+        title="Table of Contents Categories"
+        lede="These are the sections customers see in the shop menu (Necklaces, Bracelets, Scrunchies, and so on). Lower sort numbers appear higher in the list."
+      />
 
-        <form className="admin-form" onSubmit={handleCreate}>
+      <section className="admin-panel">
+        <h3 className="admin-subheading">Add Category</h3>
+
+        <div className="admin-callout admin-callout--legend" role="note">
+          <p className="admin-callout__title">Customize flow (template)</p>
+          <ul className="admin-legend-list">
+            <li>
+              <strong>Detailed</strong>: Best for necklaces and bracelets. Customers choose length,
+              clasp, bead size, and colors (use <strong>Customize Fields</strong> to fine-tune steps).
+            </li>
+            <li>
+              <strong>Simple</strong>: Best for smaller items. Customers usually pick colors or one
+              option group. You can adjust exact steps under <strong>Customize Fields</strong>.
+            </li>
+          </ul>
+        </div>
+
+        <form className="admin-form admin-form--constrained" onSubmit={handleCreate}>
           <label className="admin-field">
             <span>Display name</span>
-            <input value={name} onChange={(e) => syncIdFromName(e.target.value)} required />
+            <input
+              id="category-create-name"
+              name="categoryCreateName"
+              value={name}
+              onChange={(e) => syncIdFromName(e.target.value)}
+              required
+            />
           </label>
           <label className="admin-field">
             <span>URL id (slug)</span>
-            <input value={id} onChange={(e) => setId(slugify(e.target.value))} required />
+            <input
+              id="category-create-id"
+              name="categoryCreateId"
+              value={id}
+              onChange={(e) => setId(slugify(e.target.value))}
+              required
+            />
           </label>
           <label className="admin-field">
             <span>Sort order</span>
             <input
+              id="category-create-sort"
+              name="categoryCreateSort"
               type="number"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
@@ -106,21 +136,23 @@ export function AdminCategoriesPage() {
           <label className="admin-field">
             <span>Customize flow</span>
             <select
+              id="category-create-template"
+              name="categoryCreateTemplate"
               value={template}
               onChange={(e) => setTemplate(e.target.value as CustomizationTemplate)}
             >
-              <option value="detailed">Detailed (necklace/bracelet)</option>
-              <option value="simple">Simple (color pickers)</option>
+              <option value="detailed">Detailed (necklace / bracelet style)</option>
+              <option value="simple">Simple (fewer steps)</option>
             </select>
           </label>
-          <button type="submit" className="admin-button" disabled={busy}>
-            Add category
+          <button type="submit" className="admin-button admin-form__submit" disabled={busy}>
+            Add Category
           </button>
         </form>
       </section>
 
       <section className="admin-panel">
-        <h2 className="admin-heading">Current categories</h2>
+        <h3 className="admin-subheading">Current Categories</h3>
         {error && <p className="admin-error">{error}</p>}
         {message && <p className="admin-success">{message}</p>}
 
@@ -160,15 +192,28 @@ function CategoryRow({ category, disabled, onSave, onDelete }: CategoryRowProps)
       <code className="admin-code">{category.id}</code>
       <label className="admin-field">
         <span>Name</span>
-        <input value={name} onChange={(e) => setName(e.target.value)} />
+        <input
+          id={`category-${category.id}-name`}
+          name={`category-${category.id}-name`}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
       </label>
       <label className="admin-field">
         <span>Sort</span>
-        <input type="number" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} />
+        <input
+          id={`category-${category.id}-sort`}
+          name={`category-${category.id}-sort`}
+          type="number"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+        />
       </label>
       <label className="admin-field">
         <span>Template</span>
         <select
+          id={`category-${category.id}-template`}
+          name={`category-${category.id}-template`}
           value={customizationTemplate}
           onChange={(e) => setCustomizationTemplate(e.target.value as CustomizationTemplate)}
         >

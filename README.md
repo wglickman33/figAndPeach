@@ -65,13 +65,15 @@ Never commit `.env`.
 npm run dev:netlify
 ```
 
-Open the URL Netlify prints (often `http://localhost:8888`). Admin: `/admin/login`.
+Open **http://localhost:8888** (not the raw Vite port). This app uses port **5199** for Vite so it does not collide with other projects on the default **5173**. Admin: `/admin/login`.
 
 **Frontend only** (catalog offline, no login):
 
 ```bash
 npm run dev
 ```
+
+Opens **http://localhost:5199** (this repo uses that port on purpose so Netlify Dev does not pick up another Vite app on **5173**). Do not run `npm run dev` and `npm run dev:netlify` at the same time — both need port **5199**.
 
 Use `VITE_SKIP_ORDER_EMAIL=true` if you only run Vite and still want to reach the confirmation page without Resend.
 

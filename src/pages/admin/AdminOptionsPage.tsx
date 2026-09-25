@@ -7,6 +7,7 @@ import {
   updateCustomizationOption,
   uploadImageToCloudinary,
 } from "../../lib/api";
+import { AdminPageIntro } from "../../components/admin/AdminPageIntro";
 import type { CustomizationOption } from "../../types/catalog";
 import "./AdminPages.css";
 
@@ -105,18 +106,22 @@ export function AdminOptionsPage() {
   }
 
   return (
-    <div className="admin-split">
-      <section className="admin-panel">
-        <h2 className="admin-heading">Options inside a group</h2>
-        <p className="admin-muted">
-          Individual bead colors, clasp styles, etc. Pick the group first (for example 8mm x 5mm
-          rondelle beads), then upload each selectable image.
-        </p>
+    <div className="admin-stack">
+      <AdminPageIntro
+        title="Bead Options"
+        lede="Upload each selectable photo (coral bead, gold clasp, sock pattern, etc.). First choose which Bead Type it belongs to, then pick the image file from your computer."
+      />
 
-        <form className="admin-form" onSubmit={handleSubmit}>
+      <div className="admin-split">
+      <section className="admin-panel">
+        <h3 className="admin-subheading">Add Bead Option</h3>
+
+        <form className="admin-form admin-form--constrained" onSubmit={handleSubmit}>
           <label className="admin-field">
             <span>Group</span>
             <select
+              id="option-create-group"
+              name="optionCreateGroup"
               value={groupId}
               onChange={(e) => void handleGroupChange(e.target.value)}
               required
@@ -138,6 +143,8 @@ export function AdminOptionsPage() {
           <label className="admin-field">
             <span>Option name</span>
             <input
+              id="option-create-name"
+              name="optionCreateName"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Coral, Gold toggle, etc."
@@ -148,6 +155,8 @@ export function AdminOptionsPage() {
           <label className="admin-field">
             <span>Image</span>
             <input
+              id="option-create-image"
+              name="optionCreateImage"
               type="file"
               accept="image/*"
               onChange={(e) => setFile(e.target.files?.[0] ?? null)}
@@ -158,14 +167,14 @@ export function AdminOptionsPage() {
           {error && <p className="admin-error">{error}</p>}
           {message && <p className="admin-success">{message}</p>}
 
-          <button type="submit" className="admin-button" disabled={busy || !groupId}>
-            {busy ? "Saving…" : "Save option"}
+          <button type="submit" className="admin-button admin-form__submit" disabled={busy || !groupId}>
+            {busy ? "Saving…" : "Save Option"}
           </button>
         </form>
       </section>
 
       <section className="admin-panel">
-        <h2 className="admin-heading">Options in group</h2>
+        <h3 className="admin-subheading">Options in This Group</h3>
         <button
           type="button"
           className="admin-button admin-button--ghost"
@@ -217,6 +226,7 @@ export function AdminOptionsPage() {
           </ul>
         )}
       </section>
+      </div>
     </div>
   );
 }
@@ -241,15 +251,32 @@ function OptionRow({ option, disabled, onSave, onDelete }: OptionRowProps) {
       <img src={option.imageUrl} alt="" className="admin-list__thumb" />
       <label className="admin-field">
         <span>Name</span>
-        <input value={name} onChange={(e) => setName(e.target.value)} />
+        <input
+          id={`option-${option.id}-name`}
+          name={`option-${option.id}-name`}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
       </label>
       <label className="admin-field">
         <span>Sort</span>
-        <input type="number" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} />
+        <input
+          id={`option-${option.id}-sort`}
+          name={`option-${option.id}-sort`}
+          type="number"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+        />
       </label>
       <label className="admin-field">
         <span>Replace image (optional)</span>
-        <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+        <input
+          id={`option-${option.id}-image`}
+          name={`option-${option.id}-image`}
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+        />
       </label>
       <div className="admin-row-form__actions">
         <button

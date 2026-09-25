@@ -7,6 +7,7 @@ import {
   updateProduct,
   uploadImageToCloudinary,
 } from "../../lib/api";
+import { AdminPageIntro } from "../../components/admin/AdminPageIntro";
 import type { CatalogProduct, PurchaseMode } from "../../types/catalog";
 import "./AdminPages.css";
 
@@ -99,13 +100,25 @@ export function AdminProductsPage() {
   }
 
   return (
-    <div className="admin-split">
+    <div className="admin-stack">
+      <AdminPageIntro
+        title="Products"
+        lede="Each product is something customers can buy. Upload a photo from your computer, set the price, and choose Pre-made (adds straight to cart) or Customizable (customer picks options first). Turn off “Visible in shop” to hide an item without deleting it."
+      />
+
+      <div className="admin-split">
       <section className="admin-panel">
-        <h2 className="admin-heading">Add product</h2>
-        <form className="admin-form" onSubmit={handleSubmit}>
+        <h3 className="admin-subheading">Add Product</h3>
+        <form className="admin-form admin-form--constrained" onSubmit={handleSubmit}>
           <label className="admin-field">
             <span>Category</span>
-            <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
+            <select
+              id="product-create-category"
+              name="productCreateCategory"
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+              required
+            >
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -116,17 +129,32 @@ export function AdminProductsPage() {
 
           <label className="admin-field">
             <span>Name</span>
-            <input value={name} onChange={(e) => setName(e.target.value)} required />
+            <input
+              id="product-create-name"
+              name="productCreateName"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </label>
 
           <label className="admin-field">
             <span>Description</span>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
+            <textarea
+              id="product-create-description"
+              name="productCreateDescription"
+              className="admin-textarea--fixed"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={3}
+            />
           </label>
 
           <label className="admin-field">
             <span>Price (USD)</span>
             <input
+              id="product-create-price"
+              name="productCreatePrice"
               type="number"
               min="0"
               step="0.01"
@@ -139,6 +167,8 @@ export function AdminProductsPage() {
           <label className="admin-field">
             <span>Purchase mode</span>
             <select
+              id="product-create-purchase-mode"
+              name="productCreatePurchaseMode"
               value={purchaseMode}
               onChange={(e) => setPurchaseMode(e.target.value as PurchaseMode)}
             >
@@ -150,6 +180,8 @@ export function AdminProductsPage() {
           <label className="admin-field">
             <span>Image</span>
             <input
+              id="product-create-image"
+              name="productCreateImage"
               type="file"
               accept="image/*"
               onChange={(e) => setFile(e.target.files?.[0] ?? null)}
@@ -160,14 +192,14 @@ export function AdminProductsPage() {
           {error && <p className="admin-error">{error}</p>}
           {message && <p className="admin-success">{message}</p>}
 
-          <button type="submit" className="admin-button" disabled={busy}>
-            {busy ? "Saving…" : "Save product"}
+          <button type="submit" className="admin-button admin-form__submit" disabled={busy}>
+            {busy ? "Saving…" : "Save Product"}
           </button>
         </form>
       </section>
 
       <section className="admin-panel">
-        <h2 className="admin-heading">Current products</h2>
+        <h3 className="admin-subheading">Current Products</h3>
         {sortedProducts.length === 0 ? (
           <p className="admin-muted">No products yet. Add your first item on the left.</p>
         ) : (
@@ -209,6 +241,7 @@ export function AdminProductsPage() {
           </ul>
         )}
       </section>
+      </div>
     </div>
   );
 }
@@ -251,7 +284,12 @@ function ProductRow({ product, categories, disabled, onSave, onDelete }: Product
       <img src={product.imageUrl} alt="" className="admin-list__thumb" />
       <label className="admin-field">
         <span>Category</span>
-        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+        <select
+          id={`product-${product.id}-category`}
+          name={`product-${product.id}-category`}
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+        >
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -261,23 +299,50 @@ function ProductRow({ product, categories, disabled, onSave, onDelete }: Product
       </label>
       <label className="admin-field">
         <span>Name</span>
-        <input value={name} onChange={(e) => setName(e.target.value)} />
+        <input
+          id={`product-${product.id}-name`}
+          name={`product-${product.id}-name`}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
       </label>
       <label className="admin-field">
         <span>Description</span>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={2} />
+        <textarea
+          id={`product-${product.id}-description`}
+          name={`product-${product.id}-description`}
+          className="admin-textarea--fixed"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows={2}
+        />
       </label>
       <label className="admin-field">
         <span>Price</span>
-        <input type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} />
+        <input
+          id={`product-${product.id}-price`}
+          name={`product-${product.id}-price`}
+          type="number"
+          step="0.01"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
       </label>
       <label className="admin-field">
         <span>Sort</span>
-        <input type="number" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} />
+        <input
+          id={`product-${product.id}-sort`}
+          name={`product-${product.id}-sort`}
+          type="number"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+        />
       </label>
       <label className="admin-field">
         <span>Purchase mode</span>
         <select
+          id={`product-${product.id}-purchase-mode`}
+          name={`product-${product.id}-purchase-mode`}
           value={purchaseMode}
           onChange={(e) => setPurchaseMode(e.target.value as PurchaseMode)}
         >
@@ -287,6 +352,8 @@ function ProductRow({ product, categories, disabled, onSave, onDelete }: Product
       </label>
       <label className="admin-field admin-field--checkbox">
         <input
+          id={`product-${product.id}-active`}
+          name={`product-${product.id}-active`}
           type="checkbox"
           checked={isActive}
           onChange={(e) => setIsActive(e.target.checked)}
@@ -295,7 +362,13 @@ function ProductRow({ product, categories, disabled, onSave, onDelete }: Product
       </label>
       <label className="admin-field">
         <span>Replace image (optional)</span>
-        <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+        <input
+          id={`product-${product.id}-image`}
+          name={`product-${product.id}-image`}
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+        />
       </label>
       <div className="admin-row-form__actions">
         <button

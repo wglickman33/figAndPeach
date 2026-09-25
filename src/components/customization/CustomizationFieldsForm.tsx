@@ -238,14 +238,14 @@ function BeadSizeColorsField({
   return (
     <>
       <PillSelector
-        label={`${field.label} — size`}
+        label={`${field.label}: size`}
         options={beadSizeOptions}
         selected={beadGroupId}
         onChange={setBeadGroup}
         variant="stacked"
       />
       <ImageOptionGrid
-        label={`${field.label} — color`}
+        label={`${field.label}: color`}
         hint={colorHint}
         options={colorOptions}
         selected={colorIds}

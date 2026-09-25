@@ -1,59 +1,59 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
+import logo from "../../assets/figAndPeach.png";
 import { useAdminAuth } from "../../context/useAdminAuth";
 import "./AdminPages.css";
+
+const NAV_ITEMS: { to: string; label: string; end?: boolean }[] = [
+  { to: "/admin", end: true, label: "Overview" },
+  { to: "/admin/categories", label: "Categories" },
+  { to: "/admin/products", label: "Products" },
+  { to: "/admin/groups", label: "Bead Types" },
+  { to: "/admin/options", label: "Bead Options" },
+  { to: "/admin/customization-fields", label: "Customize Fields" },
+];
 
 export function AdminLayout() {
   const { session, logout } = useAdminAuth();
 
   return (
     <div className="admin-shell">
-      <header className="admin-shell__header">
-        <div>
-          <p className="admin-shell__eyebrow">Fig &amp; Peach</p>
-          <h1 className="admin-shell__title">Admin</h1>
+      <header className="admin-topbar">
+        <div className="admin-topbar__brand">
+          <img src={logo} alt="Fig and Peach" className="admin-topbar__logo" />
+          <div className="admin-topbar__titles">
+            <p className="admin-topbar__site-name">Fig &amp; Peach</p>
+            <h1 className="admin-topbar__admin-title">Admin</h1>
+          </div>
         </div>
-        <div className="admin-shell__meta">
-          <span className="admin-shell__email">{session?.email}</span>
-          <button type="button" className="admin-button admin-button--ghost" onClick={() => void logout()}>
+
+        <div className="admin-topbar__account">
+          <div className="admin-topbar__account-text">
+            <span className="admin-topbar__account-label">Signed in as</span>
+            <span className="admin-topbar__email">{session?.email}</span>
+          </div>
+          <button
+            type="button"
+            className="admin-button admin-button--ghost admin-topbar__signout"
+            onClick={() => void logout()}
+          >
             Sign out
           </button>
         </div>
       </header>
 
       <nav className="admin-nav" aria-label="Admin sections">
-        <NavLink to="/admin" end className={({ isActive }) => `admin-nav__link${isActive ? " admin-nav__link--active" : ""}`}>
-          Overview
-        </NavLink>
-        <NavLink
-          to="/admin/categories"
-          className={({ isActive }) => `admin-nav__link${isActive ? " admin-nav__link--active" : ""}`}
-        >
-          Categories
-        </NavLink>
-        <NavLink
-          to="/admin/products"
-          className={({ isActive }) => `admin-nav__link${isActive ? " admin-nav__link--active" : ""}`}
-        >
-          Products
-        </NavLink>
-        <NavLink
-          to="/admin/groups"
-          className={({ isActive }) => `admin-nav__link${isActive ? " admin-nav__link--active" : ""}`}
-        >
-          Bead types
-        </NavLink>
-        <NavLink
-          to="/admin/options"
-          className={({ isActive }) => `admin-nav__link${isActive ? " admin-nav__link--active" : ""}`}
-        >
-          Bead options
-        </NavLink>
-        <NavLink
-          to="/admin/customization-fields"
-          className={({ isActive }) => `admin-nav__link${isActive ? " admin-nav__link--active" : ""}`}
-        >
-          Customize fields
-        </NavLink>
+        {NAV_ITEMS.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.end ?? false}
+            className={({ isActive }) =>
+              `admin-nav__link${isActive ? " admin-nav__link--active" : ""}`
+            }
+          >
+            {item.label}
+          </NavLink>
+        ))}
         <Link to="/shop/necklaces" className="admin-nav__link admin-nav__link--shop">
           View shop
         </Link>
